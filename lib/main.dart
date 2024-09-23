@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pictionairy/ui/screens/home.dart';
 import 'package:pictionairy/ui/screens/identification.dart';
 
 void main() {
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const Identification(),
+      home: const Home(),
     );
   }
 }

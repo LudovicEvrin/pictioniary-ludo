@@ -18,14 +18,6 @@ class Identification extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Entrez votre pseudo',
-                    ),
-                ),
-              ),
               ElevatedButton(
                   onPressed: () {
                     debugPrint('salu');
