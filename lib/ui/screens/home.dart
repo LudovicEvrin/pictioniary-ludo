@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pictionairy/api/api_login.dart';
 import 'package:pictionairy/main.dart';
 
 class Home extends StatelessWidget {
@@ -19,16 +20,28 @@ class Home extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // Ajout de la Row avec le texte 'Bienvenue'
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
+              child: FutureBuilder<String?>(
+              future: getName(),  // Appel de la méthode asynchrone
+              builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator(); // Affiche un indicateur de chargement
+                } else if (snapshot.hasError) {
+                  return const Text('Erreur de récupération du nom');
+                } else if (snapshot.hasData && snapshot.data != null) {
+                  return Text(
+                    'Bienvenue, ${snapshot.data}', // Affichage du nom récupéré
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
+                  );
+                } else {
+                  return const Text(
                     'Bienvenue',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ],
+                    );
+                  }
+                }
               ),
             ),
             const SizedBox(height: 60), // Espacement
