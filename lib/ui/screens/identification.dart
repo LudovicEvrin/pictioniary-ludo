@@ -51,6 +51,7 @@ class Identification extends StatelessWidget {
                     vertical: 20
                 ),
                 child: TextFormField(
+                  obscureText: true,
                   controller: passwordController,
                   decoration: const InputDecoration(
                     labelText: 'Entrez votre mot de passe',
@@ -69,17 +70,17 @@ class Identification extends StatelessWidget {
                     String name = nameController.text;
                     String password = passwordController.text;
 
-                    final navigator = Navigator.of(context);
+
                     final scaffoldMessenger = ScaffoldMessenger.of(context);
+                    final navigator = Navigator.of(context);
+
 
                     bool isAuthenticated = await login(name, password);
 
                     if (isAuthenticated) {
-                      navigator.push(
-                        MaterialPageRoute(
-                          builder: (context) => const Home(),
-                        ),
-                      );
+                      navigator.pushNamed('/home');
+                      nameController.clear();
+                      passwordController.clear();
                     } else {
                       scaffoldMessenger.showSnackBar(
                         const SnackBar(content: Text('Pseudo ou mot de passe incorrect')),

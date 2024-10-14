@@ -18,6 +18,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/login': (context) => Identification(),
+        '/home': (context) => const Home(),
+      },
       title: 'PICTION.IA.RY',
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFF48A9A6),
