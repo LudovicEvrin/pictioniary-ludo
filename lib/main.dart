@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pictionairy/ui/screens/drawerform.dart';
+import 'package:pictionairy/ui/screens/guesserform.dart';
 import 'package:pictionairy/ui/screens/home.dart';
 import 'package:pictionairy/ui/screens/identification.dart';
+import 'package:pictionairy/ui/screens/scanner.dart';
 
 void main() {
   runApp(const MyApp());
