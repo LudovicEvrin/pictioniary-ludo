@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:pictionairy/api/api_game.dart';
-
+import 'dart:async';
 import '../../main.dart';
 
 class Composition extends StatefulWidget {
@@ -14,6 +14,7 @@ class Composition extends StatefulWidget {
 }
 
 class _CompositionState extends State<Composition> {
+  late Timer _timer;
   Map<String, dynamic>? gameData;
   String? bluePlayer1;
   String? bluePlayer2;
@@ -24,6 +25,9 @@ class _CompositionState extends State<Composition> {
   void initState() {
     super.initState();
     _fetchGameData();
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      _fetchGameData();
+    });
   }
 
   Future<void> _fetchGameData() async {
@@ -47,7 +51,11 @@ class _CompositionState extends State<Composition> {
     }
     return null;
   }
-
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,11 +75,14 @@ class _CompositionState extends State<Composition> {
               ),
             ),
             const SizedBox(height: 16),
-            QrImageView(
+            Center(
+                child: QrImageView(
               data: widget.gameId,
               version: QrVersions.auto,
               size: 200.0,
             ),
+            ),
+
             const TeamTitle(teamName: 'Equipe Bleu'),
             const SizedBox(height: 8),
             TeamCard(

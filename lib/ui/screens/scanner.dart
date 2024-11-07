@@ -87,6 +87,10 @@ class _ScannerState extends State<Scanner> {
 
   @override
   Widget build(BuildContext context) {
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+      MediaQuery.of(context).size.height < 400)
+      ? 250.0
+      : 300.0;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scanner un QR Code'),
@@ -98,6 +102,12 @@ class _ScannerState extends State<Scanner> {
             flex: 5,
             child: QRView(
               key: qrKey,
+              overlay: QrScannerOverlayShape(
+                  borderColor: Colors.red,
+                  borderRadius: 10,
+                  borderLength: 30,
+                  borderWidth: 10,
+                  cutOutSize: scanArea),
               onQRViewCreated: _onQRViewCreated,
             ),
           ),
