@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:pictionairy/api/api_game.dart';
 import 'dart:async';
@@ -31,11 +32,9 @@ class _CompositionState extends State<Composition> {
   }
 
   Future<void> _fetchGameData() async {
-    // Récupère les données de la session de jeu
     gameData = await fetchGameSession(widget.gameId);
 
     if (gameData != null) {
-      // Récupère les noms des joueurs pour chaque équipe
       bluePlayer1 = await _getPlayerName(gameData!['blue_player_1']);
       bluePlayer2 = await _getPlayerName(gameData!['blue_player_2']);
       redPlayer1 = await _getPlayerName(gameData!['red_player_1']);
@@ -51,64 +50,75 @@ class _CompositionState extends State<Composition> {
     }
     return null;
   }
+
   @override
   void dispose() {
     _timer.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Composition des équipes'),
-        backgroundColor: const Color(0xFF48A9A6),
+        backgroundColor: const Color(0xFFCEDAE6),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Text(
-                'Numéro de la Partie : ${widget.gameId}',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        child: AnimationLimiter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: AnimationConfiguration.toStaggeredList(
+              duration: const Duration(milliseconds: 375),
+              childAnimationBuilder: (widget) => SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(child: widget),
               ),
-            ),
-            const SizedBox(height: 16),
-            Center(
-                child: QrImageView(
-              data: widget.gameId,
-              version: QrVersions.auto,
-              size: 200.0,
-            ),
-            ),
-
-            const TeamTitle(teamName: 'Equipe Bleu'),
-            const SizedBox(height: 8),
-            TeamCard(
-              backgroundColor: Colors.blue,
-              players: [
-                bluePlayer1 ?? '<en attente>',
-                bluePlayer2 ?? '<en attente>',
+              children: [
+                Center(
+                  child: Text(
+                    'Numéro de la Partie : ${widget.gameId}',
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: QrImageView(
+                    data: widget.gameId,
+                    version: QrVersions.auto,
+                    size: 200.0,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const TeamTitle(teamName: 'Equipe Bleu'),
+                const SizedBox(height: 8),
+                TeamCard(
+                  backgroundColor: Colors.blue,
+                  players: [
+                    bluePlayer1 ?? '<en attente>',
+                    bluePlayer2 ?? '<en attente>',
+                  ],
+                ),
+                const SizedBox(height: 24),
+                const TeamTitle(teamName: 'Equipe Rouge'),
+                const SizedBox(height: 8),
+                TeamCard(
+                  backgroundColor: Colors.red,
+                  players: [
+                    redPlayer1 ?? '<en attente>',
+                    redPlayer2 ?? '<en attente>',
+                  ],
+                ),
+                const SizedBox(height: 64),
+                const Text(
+                  'La partie sera lancée automatiquement une fois les joueurs au complet',
+                  style: TextStyle(fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
-            const SizedBox(height: 24),
-            const TeamTitle(teamName: 'Equipe Rouge'),
-            const SizedBox(height: 8),
-            TeamCard(
-              backgroundColor: Colors.red,
-              players: [
-                redPlayer1 ?? '<en attente>',
-                redPlayer2 ?? '<en attente>',
-              ],
-            ),
-            const Spacer(),
-            const Text(
-              'La partie sera lancée automatiquement une fois les joueurs au complet',
-              style: TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
-            ),
-          ],
+          ),
         ),
       ),
     );

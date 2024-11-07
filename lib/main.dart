@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       },
       title: 'PICTION.IA.RY',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFF48A9A6),
+        scaffoldBackgroundColor: const Color(0xFFCEDAE6),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF4357AD),
@@ -55,7 +55,7 @@ class TitlePage extends StatelessWidget {
       style: const TextStyle(
         fontFamily: 'Arcade',
         fontSize: 40,
-        color: Color(0xFFe4dfda),
+        color: Color(0xff3e2205),
       ),
 
 

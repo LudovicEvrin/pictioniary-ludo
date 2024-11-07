@@ -20,7 +20,7 @@ class Identification extends StatelessWidget {
           title: 'PICTION.IA.RY',
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFF48A9A6),
+        backgroundColor: const Color(0xFFCEDAE6),
       ),
       body: Center(
         child: Form(

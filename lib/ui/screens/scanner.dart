@@ -94,7 +94,7 @@ class _ScannerState extends State<Scanner> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scanner un QR Code'),
-        backgroundColor: const Color(0xFF48A9A6),
+        backgroundColor: const Color(0xFFCEDAE6),
       ),
       body: Column(
         children: <Widget>[

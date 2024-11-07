@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'modale.dart';
 
@@ -10,38 +11,49 @@ class ChallengesPage extends StatefulWidget {
 }
 
 class _ChallengesPageState extends State<ChallengesPage> {
-  List<Map<String, dynamic>> challenges = [
-  ];
+  List<Map<String, dynamic>> challenges = [];
   int challengeCounter = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Saisie des challenges'),
         leading: const Icon(Icons.arrow_back),
-        backgroundColor: const Color(0xFF48A9A6),
+        backgroundColor: const Color(0xFFCEDAE6),
       ),
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: challenges.length,
-              itemBuilder: (context, index) {
-                final challenge = challenges[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ChallengeCard(
-                    title: challenge['title'],
-                    description: challenge['description'],
-                    motsInterdit: challenge['motsInterdit'],
-                    onDelete: () {
-                      setState(() {
-                        challenges.removeAt(index);
-                      });
-                    },
-                  ),
-                );
-              },
+            child: AnimationLimiter(
+              child: ListView.builder(
+                itemCount: challenges.length,
+                itemBuilder: (context, index) {
+                  final challenge = challenges[index];
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: const Duration(milliseconds: 375),
+                    child: SlideAnimation(
+                      verticalOffset: 50.0,
+                      child: FadeInAnimation(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ChallengeCard(
+                            title: challenge['title'],
+                            description: challenge['description'],
+                            motsInterdit: challenge['motsInterdit'],
+                            onDelete: () {
+                              setState(() {
+                                challenges.removeAt(index);
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
           Center(
@@ -81,7 +93,8 @@ class ChallengeCard extends StatelessWidget {
   final List<String> motsInterdit;
   final VoidCallback onDelete;
 
-  const ChallengeCard({super.key,
+  const ChallengeCard({
+    super.key,
     required this.title,
     required this.description,
     required this.motsInterdit,
