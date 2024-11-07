@@ -15,6 +15,7 @@ class Composition extends StatefulWidget {
 }
 
 class _CompositionState extends State<Composition> {
+
   late Timer _timer;
   Map<String, dynamic>? gameData;
   String? bluePlayer1;
@@ -51,6 +52,19 @@ class _CompositionState extends State<Composition> {
     return null;
   }
 
+  Future<void> _leaveGame() async {
+    final success = await leaveGameSession(widget.gameId);
+    if (success) {
+      // Redirection vers la page d'accueil
+      final navigator = Navigator.of(context);
+      navigator.pushNamed('/home');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Erreur lors de la sortie de la partie')),
+      );
+    }
+  }
+
   @override
   void dispose() {
     _timer.cancel();
@@ -63,6 +77,10 @@ class _CompositionState extends State<Composition> {
       appBar: AppBar(
         title: const Text('Composition des équipes'),
         backgroundColor: const Color(0xFFCEDAE6),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: _leaveGame,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

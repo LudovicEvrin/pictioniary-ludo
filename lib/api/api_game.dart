@@ -110,3 +110,29 @@ Future<String?> fetchPlayerName(int playerId) async {
     return null;
   }
 }
+
+Future<bool> leaveGameSession(String gameId) async {
+  final url = Uri.parse('https://pictioniary.wevox.cloud/api/game_sessions/$gameId/leave');
+  final token = await getToken();
+
+  if (token != null) {
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      debugPrint('Erreur lors de la déconnexion de la session : ${response.body}');
+      return false;
+    }
+  } else {
+    debugPrint('Erreur réseau lors de la déconnexion : ');
+    return false;
+  }
+
+}
