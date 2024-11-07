@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pictionairy/ui/screens/challenge.dart';
 import 'package:pictionairy/ui/screens/composition.dart';
+import 'package:pictionairy/ui/screens/inscription.dart';
 import 'package:pictionairy/ui/screens/loading.dart';
 import 'package:pictionairy/ui/screens/drawerform.dart';
 import 'package:pictionairy/ui/screens/guesserform.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => Identification(),
         '/home': (context) => const Home(),
-        '/qrcode' : (context) => const Scanner()
+        '/qrcode' : (context) => const Scanner(),
+        '/inscription': (context) => Inscription()
       },
       title: 'PICTION.IA.RY',
       theme: ThemeData(

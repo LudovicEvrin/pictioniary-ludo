@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pictionairy/api/api_inscription.dart';
 import 'package:pictionairy/main.dart';
 import 'package:pictionairy/ui/screens/home.dart';
-import '../../api/api_login.dart';
 
 
-class Identification extends StatelessWidget {
-  Identification({super.key});
+class Inscription extends StatelessWidget {
+  Inscription({super.key});
 
   final formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
@@ -29,7 +29,7 @@ class Identification extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Text(
-                'Connexion',
+                'Inscription',
                 style: TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
@@ -38,7 +38,7 @@ class Identification extends StatelessWidget {
               const SizedBox(height: 80),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 40,
+                  horizontal: 40,
                 ),
                 child: TextFormField(
                   controller: nameController,
@@ -78,32 +78,21 @@ class Identification extends StatelessWidget {
                     String name = nameController.text;
                     String password = passwordController.text;
 
-
-                    final scaffoldMessenger = ScaffoldMessenger.of(context);
                     final navigator = Navigator.of(context);
 
 
-                    bool isAuthenticated = await login(name, password);
-
-                    if (isAuthenticated) {
-                      navigator.pushNamed('/home');
-                      nameController.clear();
-                      passwordController.clear();
-                    } else {
-                      scaffoldMessenger.showSnackBar(
-                        const SnackBar(content: Text('Pseudo ou mot de passe incorrect')),
-                      );
-                    }
+                    await inscription(name, password);
+                    navigator.pushNamed('/login');
                   }
                 },
 
-                child: const Text('Connexion'),
+                child: const Text('Enregistrer'),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/inscription');
+                  Navigator.of(context).pushNamed('/login');
                 },
-                child: const Text('Pas de compte ? Inscrivez-vous'),
+                child: const Text('Déjà un compte ? Connectez vous'),
               ),
             ],
           ),
