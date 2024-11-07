@@ -80,8 +80,23 @@ class Inscription extends StatelessWidget {
 
                     final navigator = Navigator.of(context);
 
-
                     await inscription(name, password);
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const AlertDialog(
+                          content: Text(
+                            'Merci pour votre inscription, vous pouvez maintenant vous connecter',
+                          ),
+                        );
+                      },
+                    );
+
+                    // Délai de 3 secondes avant de fermer la popin et rediriger
+                    await Future.delayed(const Duration(seconds: 3));
+                    navigator.pop(); // Ferme la popin
+
                     navigator.pushNamed('/login');
                   }
                 },
