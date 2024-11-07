@@ -31,11 +31,11 @@ class Identification extends StatelessWidget {
               const Text(
                 'Connexion',
                 style: TextStyle(
-                  fontSize: 36,
+                  fontSize: 32,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 80),
+              const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 40,
