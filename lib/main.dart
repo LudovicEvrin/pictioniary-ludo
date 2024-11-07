@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => Identification(),
         '/home': (context) => const Home(),
+        '/qrcode' : (context) => const Scanner()
       },
       title: 'PICTION.IA.RY',
       theme: ThemeData(
