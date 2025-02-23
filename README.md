@@ -1,6 +1,11 @@
-# pictionairy
+# Pictioniary
 
-A new Flutter project.
+The concept of this game is a simple game of Pictionary but with AI. You must create an account and then login before playing.
+
+You can either join a game, or create one. Once 4 players have joined a game, the challenge can start. Each player will propose a challenge and create forbidden words that cannot be used by the drawer. The drawer receives the prompt and will ask an AI to recreate the prompt without using the forbidden words. Once the image is generated and validated by the drawer, the guesser will have to guess the original prompt.
+The team with the most score by the end of the game wins.
+
+This app is not yet entirely finished.
 
 ## Getting Started
 
