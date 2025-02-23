@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pictionairy/main.dart';
+import 'package:pictionairy/ui/models/timer.dart';
+import 'package:pictionairy/ui/screens/loading.dart';
 
 class Guesserform extends StatelessWidget {
   const Guesserform({super.key});
@@ -20,10 +22,7 @@ class Guesserform extends StatelessWidget {
               'Chrono',
               style: TextStyle(fontSize: 24),
             ),
-            const Text(
-              '232',
-              style: TextStyle(fontSize: 24),
-            ),
+            Timer(),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -111,7 +110,23 @@ class Guesserform extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 // Icone d'aide
-                const Icon(Icons.help_outline, color: Colors.white),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Loading(message: "En attente de l'autre équipe"),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      backgroundColor: const Color(0xFF77D877)
+                    ),
+                  child: const Icon(
+                      Icons.check_circle,color: Colors.white
+                  ),
+                ),
               ],
             ),
             // Bouton Abandonner
@@ -119,7 +134,12 @@ class Guesserform extends StatelessWidget {
               padding: const EdgeInsets.only(top: 40),
               child: ElevatedButton(
               onPressed: () {
-                // Action du bouton
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Loading(message: "En attente de l'autre équipe"),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),

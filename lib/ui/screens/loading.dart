@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Loading extends StatelessWidget {
-  const Loading({super.key});
+  final String message;
+  const Loading({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +24,9 @@ class Loading extends StatelessWidget {
                 size: 50,
               ),
               const SizedBox(height: 16),
-              const Text(
-                "En attente des autres joueurs",
-                style: TextStyle(fontSize: 16),
+              Text(
+                message,
+                style: const TextStyle(fontSize: 16),
               ),
             ],
           ),
