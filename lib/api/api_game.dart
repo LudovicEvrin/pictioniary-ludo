@@ -111,6 +111,57 @@ Future<String?> fetchPlayerName(int playerId) async {
   }
 }
 
+Future<bool> startGameSession(String gameId) async {
+  final url = Uri.parse('https://pictioniary.wevox.cloud/api/game_sessions/$gameId/start');
+  final token = await getToken();
+
+  if (token != null) {
+    final response = await http.post(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      debugPrint('Erreur lors de la déconnexion de la session : ${response.body}');
+      return false;
+    }
+  } else {
+    debugPrint('Erreur réseau lors de la déconnexion : ');
+    return false;
+  }
+}
+
+Future<String?> fetchGameStatus(String gameId) async {
+  final url = Uri.parse('https://pictioniary.wevox.cloud/api/game_sessions/$gameId/status');
+  final token = await getToken();
+
+  if (token != null) {
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return data['status'];
+    } else {
+      debugPrint("Erreur lors de la récupération du joueur : ${response.body}");
+      return null;
+    }
+  } else {
+    debugPrint("Erreur : le token est nul");
+    return null;
+  }
+}
+
 Future<bool> leaveGameSession(String gameId) async {
   final url = Uri.parse('https://pictioniary.wevox.cloud/api/game_sessions/$gameId/leave');
   final token = await getToken();
@@ -134,5 +185,6 @@ Future<bool> leaveGameSession(String gameId) async {
     debugPrint('Erreur réseau lors de la déconnexion : ');
     return false;
   }
+
 
 }

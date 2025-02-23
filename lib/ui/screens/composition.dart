@@ -41,8 +41,35 @@ class _CompositionState extends State<Composition> {
       redPlayer1 = await _getPlayerName(gameData!['red_player_1']);
       redPlayer2 = await _getPlayerName(gameData!['red_player_2']);
 
+      final currentStatus = await fetchGameStatus(widget.gameId);
+
+      if (currentStatus == 'challenge') {
+        _navigateToChallengePage();
+        return;
+      }
+
+      final allPlayersReady = bluePlayer1 != null &&
+          bluePlayer2 != null &&
+          redPlayer1 != null &&
+          redPlayer2 != null;
+
+      if (allPlayersReady && currentStatus == 'lobby') {
+        await _startGame();
+      }
+
+
       setState(() {}); // Rafraîchit l'interface après avoir récupéré les données
     }
+  }
+
+  Future<void> _startGame() async {
+    await startGameSession(widget.gameId);
+  }
+
+  void _navigateToChallengePage() {
+    final navigator = Navigator.of(context);
+
+    navigator.pushReplacementNamed('/challenge', arguments: widget.gameId);
   }
 
   Future<String?> _getPlayerName(int? playerId) async {
